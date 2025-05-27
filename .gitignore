@@ -1,0 +1,4 @@
+__pycache__/
+aclImdb/
+*.tar.gz
+temp.txt

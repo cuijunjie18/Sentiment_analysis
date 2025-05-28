@@ -71,7 +71,7 @@ def get_data():
     print("Build vocab....")
     # train_vocab = Vocab(source_train,reserved_tokens = ['<pad>'])
     # test_vocab = Vocab(source_test,reserved_tokens = ['<pad>'])
-    vocab = Vocab(source,reserved_tokens = ['<pad>'])
+    vocab = Vocab(source,min_freq = 5,reserved_tokens = ['<pad>']) # 设置min_freq = 5，以减少embeding层的大小
     print("Finish!")
     print("Build data-iter...")
     train_iter = get_iter(source_train,train_labels,vocab)

@@ -4,6 +4,16 @@
 
 尝试第一个NLP实践项目，检查自己对NLP处理流程及对应模型训练的熟悉程度，同时希望提高自己的pytorch的coding能力，发现更多关于我训练模型流程中那些可能存在的bug!
 
+
+### 目录介绍：主要文件介绍
+
+- main.ipynb： rnn实现模型(已完成)
+- cnn.ipynb： cnn实现模型(未完成)
+- data_preprocess： 自定义数据预处理模块
+- net_frame： 常用NLP模型框架及函数集
+- embed_layer： embedding层实现
+
+
 ### 日志
 
 #### 5.27 2025
@@ -12,7 +22,12 @@
 #### 5.28 2025
 - 1.采用RNN架构搭建模型，模型训练效果一直很差，debug de到死发现是构造Dataloader时shuffle = False,因为是二分类问题，按顺序每次拟合了前面的类别，这是导致loss跳变的原因.
 <br>
+
 - 2.解决训练效果后发现仅拟合了训练集，而测试集acc始终为50%左右，对于二分类问题效果几乎为0,一开始认为是模型原因，后面发现是Vocab的原因，即我的train_vocab与test_vocab不一样，这样导致训练与测试时的token_to_idx不一样，即每个word的编码都不一样，所以效果差.
+
+<br>
+
+- 3.构建vocab可以提高min_freq,以减少embedding层的参数量.
 
 ## 后记
 

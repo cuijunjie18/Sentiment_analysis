@@ -1,9 +1,3 @@
-from net_frame import *
-import time
-import os
-from tqdm import tqdm 
-
-# 加载原始数据
 # 方法1
 def get_raw_data(data_path = 'aclImdb',istrain = True):
     """获取原始的sentence及标签"""
@@ -24,7 +18,7 @@ def get_raw_data(data_path = 'aclImdb',istrain = True):
                     data.append(line.strip())
                     labels.append(1 if label == 'pos' else 0)
     end = time.perf_counter()
-    print(f"Load raw data use time:{end - start}s")
+    print(f"Load data use time:{end - start}s")
     return data,labels
 
 # 方法2
@@ -54,27 +48,15 @@ def build_array(text,vocab,num_steps):
     arrays = [truncate_pad(line,num_steps,padding_token = vocab['<pad>']) for line in lines]
     return torch.tensor(arrays,dtype = torch.int32)
 
-def get_iter(source,labels,vocab,batch_size = 64,num_steps = 500):
-    source_arrays = build_array(source,vocab,num_steps)
-    # target_arrays = torch.tensor(train_labels).reshape(-1,1)
-    target_arrays = torch.tensor(labels).to(torch.long) # 类别索引格式，dtype = long
-    dataset = data.TensorDataset(source_arrays,target_arrays)
-    return data.DataLoader(dataset,batch_size,shuffle = True)
+# 数据标量化
+num_steps = 500
+source_arrays = build_array(source_train,train_vocab,num_steps = 500)
+# target_arrays = torch.tensor(train_labels).reshape(-1,1)
+target_arrays = torch.tensor(train_labels).to(torch.long) # 类别索引格式，dtype = long
+print(source_arrays.shape)
+print(target_arrays.shape)
 
-def get_data():
-    """获得训练测试的迭代器及各自的vocab"""
-    train_data,train_labels = get_raw_data()
-    test_data,test_labels = get_raw_data(istrain = False)
-    source_train = tokenize(train_data,token = 'word')
-    source_test = tokenize(test_data,token = 'word')
-    source = source_train + source_test # 训练与测试的corpus拼接
-    print("Build vocab....")
-    # train_vocab = Vocab(source_train,reserved_tokens = ['<pad>'])
-    # test_vocab = Vocab(source_test,reserved_tokens = ['<pad>'])
-    vocab = Vocab(source,reserved_tokens = ['<pad>'])
-    print("Finish!")
-    print("Build data-iter...")
-    train_iter = get_iter(source_train,train_labels,vocab)
-    test_iter = get_iter(source_test,test_labels,vocab)
-    print("Finish!")
-    return train_iter,test_iter,vocab
+# 构造数据迭代器
+batch_size = 64
+train_iter = data.DataLoader(
+    data.TensorDataset(source_arrays,target_arrays),batch_size,shuffle = False)

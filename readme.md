@@ -12,8 +12,9 @@
 - data_preprocess： 自定义数据预处理模块
 - net_frame： 常用NLP模型框架及函数集
 - embed_layer： embedding层实现
-- plots： rnn/cnn实验的loss、train_acc、test_acc结果图
-- plot_compare.py： 绘制实验比较图
+- plots： rnn/cnn实验的loss、train_acc、test_acc结果python列表对象
+- compares： 结果图
+- plot_compare.py： 绘制实验比较图脚本
 
 
 ### 日志
@@ -45,6 +46,7 @@
 - 3.cnn计算量比rnn大，但是训练速度却比rnn快，因为rnn是**顺序模型**，难以并行计算.
 
 - 4.rnn与cnn训练效果、准确率对比
+
   (1)LOSS
   ![LOSS](compares/1.png)
 
@@ -55,8 +57,11 @@
   ![test_acc](compares/3.png)
 
 - 5.rnn与cnn训练过拟合情况对比
+
   (1)rnn
   ![rnn](compares/4.png)
+
+  <br>
 
   (2)cnn
   ![cnn](compares/5.png)

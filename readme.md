@@ -8,10 +8,12 @@
 ### 目录介绍：主要文件介绍
 
 - main.ipynb： rnn实现模型(已完成)
-- cnn.ipynb： cnn实现模型(未完成)
+- cnn.ipynb： cnn实现模型(已完成)
 - data_preprocess： 自定义数据预处理模块
 - net_frame： 常用NLP模型框架及函数集
 - embed_layer： embedding层实现
+- plots： rnn/cnn实验的loss、train_acc、test_acc结果图
+- plot_compare.py： 绘制实验比较图
 
 
 ### 日志
@@ -28,6 +30,36 @@
 <br>
 
 - 3.构建vocab可以提高min_freq,以减少embedding层的参数量.
+
+#### 5.29 2025
+
+- 1.模型嵌入层记得冻结，不需要更新
+    ```py
+    # 加载
+    net.embedding.weight.data.copy_(embeds)
+    net.embedding.weight.requires_grad = False
+    ```
+
+- 2.采用TextCNN架构，由于前期工作较为完善，直接移植模型，相同的预处理，直接跑通.且5次epoch训练集上接近100%
+
+- 3.cnn计算量比rnn大，但是训练速度却比rnn快，因为rnn是**顺序模型**，难以并行计算.
+
+- 4.rnn与cnn训练效果、准确率对比
+  (1)LOSS
+  ![LOSS](compares/1.png)
+
+  (2)train_acc
+  ![train_acc](compares/2.png)
+
+  (3)test_acc
+  ![test_acc](compares/3.png)
+
+- 5.rnn与cnn训练过拟合情况对比
+  (1)rnn
+  ![rnn](compares/4.png)
+
+  (2)cnn
+  ![cnn](compares/5.png)
 
 ## 后记
 

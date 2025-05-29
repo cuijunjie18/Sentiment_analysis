@@ -2,3 +2,6 @@ __pycache__/
 aclImdb/
 *.tar.gz
 temp.txt
+results/
+sentiment-analysis-cnn.ipynb
+sentiment-analysis-rnn.ipynb

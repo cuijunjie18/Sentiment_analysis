@@ -59,6 +59,7 @@ def seq_data_iter_random(corpus, batch_size, num_steps):  #@save
 
 def tokenize(lines, token='word'):  #@save
     """将文本行拆分为单词或字符词元"""
+    assert(type(lines[0]) == str and type(lines) == list),"lines must be a list of str"
     if token == 'word':
         return [line.split() for line in lines]
     elif token == 'char':

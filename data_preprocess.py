@@ -61,7 +61,7 @@ def get_iter(source,labels,vocab,batch_size = 64,num_steps = 500):
     dataset = data.TensorDataset(source_arrays,target_arrays)
     return data.DataLoader(dataset,batch_size,shuffle = True)
 
-def get_data():
+def get_data(batch_size = 64):
     """获得训练测试的迭代器及各自的vocab"""
     train_data,train_labels = get_raw_data()
     test_data,test_labels = get_raw_data(istrain = False)
@@ -74,7 +74,7 @@ def get_data():
     vocab = Vocab(source,min_freq = 5,reserved_tokens = ['<pad>']) # 设置min_freq = 5，以减少embeding层的大小
     print("Finish!")
     print("Build data-iter...")
-    train_iter = get_iter(source_train,train_labels,vocab)
-    test_iter = get_iter(source_test,test_labels,vocab)
+    train_iter = get_iter(source_train,train_labels,vocab,batch_size = batch_size)
+    test_iter = get_iter(source_test,test_labels,vocab,batch_size = batch_size)
     print("Finish!")
     return train_iter,test_iter,vocab
